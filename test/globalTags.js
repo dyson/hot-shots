@@ -49,6 +49,7 @@ describe('#globalTags', () => {
         process.env.DD_ENTITY_ID = '04652bb7-19b7-11e9-9cc6-42010a9c016d';
         process.env.DD_ENV = 'test';
         process.env.DD_SERVICE = 'test-service';
+        process.env.DD_TAGS = 'team:test-team system:test-system';
         process.env.DD_VERSION = '1.0.0';
 
         server = createServer(serverType, opts => {
@@ -60,7 +61,7 @@ describe('#globalTags', () => {
         server.on('metrics', metrics => {
           assert.strictEqual(
             metrics,
-            `test:1|c|#gtag,dd.internal.entity_id:04652bb7-19b7-11e9-9cc6-42010a9c016d,env:test,service:test-service,version:1.0.0${metricEnd}`
+            `test:1|c|#gtag,dd.internal.entity_id:04652bb7-19b7-11e9-9cc6-42010a9c016d,env:test,service:test-service,version:1.0.0${metricEnd},team:test-team,system:test-system`
           );
           done();
         });
@@ -71,6 +72,7 @@ describe('#globalTags', () => {
         process.env.DD_ENTITY_ID = '04652bb7-19b7-11e9-9cc6-42010a9c016d';
         process.env.DD_ENV = 'test';
         process.env.DD_SERVICE = 'test-service';
+        process.env.DD_TAGS = 'team:test-team system:test-system';
         process.env.DD_VERSION = '1.0.0';
 
         server = createServer(serverType, opts => {
